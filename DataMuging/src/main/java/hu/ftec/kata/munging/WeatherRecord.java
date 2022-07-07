@@ -1,7 +1,7 @@
 package hu.ftec.kata.munging;
 
 public class WeatherRecord {
-    private String line;
+    private final String line;
     private int day;
     private int min;
     private int max;
@@ -12,7 +12,7 @@ public class WeatherRecord {
 
 //01234567890123456789
 //   1  88    59    74          53.8       0.00 F       280  9.6 270  17  1.6  93 23 1004.5
-    public static boolean isRecord(String line) {
+    public static boolean isWeatherRecord(String line) {
         if(line == null || line.length() < 14) {
             return false;
         }
@@ -26,7 +26,7 @@ public class WeatherRecord {
         }
     }
 
-    public static WeatherRecord getRecord(String line) {
+    public static WeatherRecord getWeatherRecord(String line) {
         if(line == null || line.length() < 14) {
             throw new RuntimeException("Nem megfelelő rekord tartalom! (%s)" + line);
         }

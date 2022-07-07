@@ -10,16 +10,14 @@ import java.util.stream.Stream;
 
 public class WeatherData {
 
-    private List<WeatherRecord> days = new ArrayList<>();
+    private final List<WeatherRecord> days = new ArrayList<>();
 
     public static WeatherData getWeatherData(Path filepath) {
-        WeatherData weatherData = new WeatherData();
-        weatherData.process(filepath);
-        return weatherData;
+        return new WeatherData().read(filepath);
     }
 
     //@Test
-    public WeatherData process(Path filepath) {
+    public WeatherData read(Path filepath) {
         if(!Files.exists(filepath)) {
             throw new RuntimeException(String.format("Nem létezik a fájl! (%s)",filepath.toAbsolutePath().toString()));
         }
@@ -27,15 +25,15 @@ public class WeatherData {
         try {
             Stream<String> lines = Files.lines(filepath);
             lines.forEach(line -> {
-                if(WeatherRecord.isRecord(line)) {
-                    this.days.add(WeatherRecord.getRecord(line));
+                if(WeatherRecord.isWeatherRecord(line)) {
+                    this.days.add(WeatherRecord.getWeatherRecord(line));
                 }
             });
             lines.close();
             return this;
         }
         catch (IOException e) {
-            throw new RuntimeException("");
+            throw new RuntimeException(String.format("IO hiba! (%s)", e.getMessage()));
         }
     }
 
