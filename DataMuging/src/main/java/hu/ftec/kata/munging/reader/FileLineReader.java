@@ -24,10 +24,8 @@ public class FileLineReader {
             throw new RuntimeException(String.format("Nem létezik a fájl! (%s)",filepath.toAbsolutePath().toString()));
         }
         this.lines.clear();
-        try {
-            Stream<String> lines = Files.lines(filepath);
+        try(Stream<String> lines = Files.lines(filepath)) {
             lines.forEach(line -> this.lines.add(line));
-            lines.close();
             return this;
         }
         catch (IOException e) {
